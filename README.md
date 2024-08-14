@@ -1,4 +1,4 @@
-# 🇾🇽 y-crossws
+# y-crossws
 
 <!-- automd:badges color=yellow -->
 
@@ -10,11 +10,11 @@
 [yjs](https://docs.yjs.dev/) websocket server powered by [crossws](https://crossws.unjs.io/), works on Node.js, Deno, Bun, Cloudflare Workers and more without any framework dependency and compatible with unmodified [y-websocket](https://github.com/yjs/y-websocket) client provider.
 
 > [!IMPORTANT]
-> This is pretty much work in progress. Feedback and contributions are more than welcome 🤞
+> This is pretty much a work in progress. Feedback and contributions are more than welcome 🤞
 
 ## Usage
 
-We need to first initiate crossws universal hooks:
+We first need to initiate universal cross-hooks:
 
 ```js
 import { createHandler } from "y-crossws";
@@ -151,15 +151,14 @@ tag = "v1"
 new_classes = ["$DurableObject"]
 ```
 
-> [!NOTE]
-> Collaboration with pub/sub is only possible via durable objects.
+
 
 > [!NOTE]
 > Read more in [crossws docs](https://crossws.unjs.io/adapters/cloudflare).
 
 ## Websocket provider
 
-You can use `WebsocketProvider` from legacy [y-websocket](https://github.com/yjs/y-websocket) or native one from `y-crossws`. Both are almost identical in terms of API at the moment, however y-crossws version has a better typescript refactors and might introduce more enhancenments in sync with server provider in the future.
+You can use `WebsocketProvider` from legacy [y-websocket](https://github.com/yjs/y-websocket) or a native one from `y-crossws`. Both are almost identical in terms of API at the moment, however, the y-crossws version has better typescript refactors and might introduce more enhancements in sync with the server provider in the future.
 
 ```js
 import * as Y from "yjs";
@@ -189,7 +188,7 @@ const provider = new WebsocketProvider(wsURL, roomName, ydoc /* options */);
 <summary>local development</summary>
 
 - Clone this repository
-- Install latest LTS version of [Node.js](https://nodejs.org/en/)
+- Install the latest LTS version of [Node.js](https://nodejs.org/en/)
 - Enable [Corepack](https://github.com/nodejs/corepack) using `corepack enable`
 - Install dependencies using `pnpm install`
 - Build in stub mode using `pnpm build --stub`
