@@ -10,7 +10,7 @@
 [yjs](https://docs.yjs.dev/) websocket server powered by [crossws](https://crossws.unjs.io/), works with Node.js, Deno, Bun, Cloudflare Workers and more without any framework dependency and compatible with unmodified [y-websocket](https://github.com/yjs/y-websocket) client provider.
 
 > [!IMPORTANT]
-> 🚧 This is still a work in progress. Feedback and contributions are welcome! 🤞
+> 🚧 This is still a work in progress. Feedback and contributions are welcome!
 
 ## Usage
 
@@ -44,7 +44,7 @@ server.listen(3000);
 ```
 
 > [!NOTE]
-> Read more in [crossws docs](https://crossws.unjs.io/adapters/node).
+> Read more about Node.js adapter in [crossws docs](https://crossws.unjs.io/adapters/node).
 
 ### Bun
 
@@ -67,7 +67,7 @@ Bun.serve({
 ```
 
 > [!NOTE]
-> Read more in [crossws docs](https://crossws.unjs.io/adapters/bun).
+> Read more about Bun adapter in [crossws docs](https://crossws.unjs.io/adapters/bun).
 
 ### Deno
 
@@ -86,29 +86,9 @@ Deno.serve({ port: 3000 }, (request, info) => {
 ```
 
 > [!NOTE]
-> Read more in [crossws docs](https://crossws.unjs.io/adapters/deno).
+> Read more about Deno adapter in [crossws docs](https://crossws.unjs.io/adapters/deno).
 
-### Cloudflare Workers
-
-Without durable object support:
-
-```js
-import { createHandler } from "y-crossws";
-import crossws from "crossws/adapters/cloudflare";
-
-const ws = crossws(createHandler());
-
-export default {
-  async fetch(request, env, context) {
-    if (request.headers.get("upgrade") === "websocket") {
-      return ws.handleUpgrade(request, env, context);
-    }
-    return new Response("", { status: 426 });
-  },
-};
-```
-
-With durable objects support:
+### Cloudflare (with durable objects)
 
 ```js
 import { createHandler } from "y-crossws";
@@ -142,17 +122,17 @@ export class $DurableObject extends DurableObject {
 Update your `wrangler.toml` config to specify Durable object:
 
 ```toml
-[[durable_objects.bindings]]
-name = "$DurableObject"
-class_name = "$DurableObject"
+durable_objects.bindings = [
+  { name = "$DurableObject", class_name = "$DurableObject" }
+]
 
-[[migrations]]
-tag = "v1"
-new_classes = ["$DurableObject"]
+migrations = [
+  { tag = "v1", new_classes = ["$DurableObject"] }
+]
 ```
 
 > [!NOTE]
-> Read more in [crossws docs](https://crossws.unjs.io/adapters/cloudflare).
+> Read more about Cloudflare adapter in [crossws docs](https://crossws.unjs.io/adapters/cloudflare#durable-objects).
 
 ## Websocket provider
 

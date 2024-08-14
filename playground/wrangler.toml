@@ -2,14 +2,12 @@ compatibility_date = "2024-01-01"
 
 site = { bucket = "./public" }
 
-[env.worker]
-main = "./cf-worker.ts"
+main = "./cf.ts"
 
-[env.durable]
-main = "./cf-durable.ts"
 durable_objects.bindings = [
   { name = "$DurableObject", class_name = "$DurableObject" }
 ]
+
 migrations = [
   { tag = "v1", new_classes = ["$DurableObject"] }
 ]
