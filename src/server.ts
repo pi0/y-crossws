@@ -59,7 +59,9 @@ export class YCrossws {
     const doc = this.getDoc(peer);
     try {
       const encoder = encoding.createEncoder();
-      const decoder = decoding.createDecoder(message.rawData);
+      const _data = message.rawData;
+      const data = _data instanceof Uint8Array ? _data : new Uint8Array(_data);
+      const decoder = decoding.createDecoder(data);
       const messageType = decoding.readVarUint(decoder);
       switch (messageType) {
         case messageSync: {
