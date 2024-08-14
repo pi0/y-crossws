@@ -14,7 +14,10 @@
 
 ## 🍿 Demo
 
-Checkout
+[tiptap](https://tiptap.dev/) editor with collaborative editing deployed on Cloudflare workers with durable objects.
+
+- [online deployment](https://y-crossws.pi0.workers.dev/tiptap/)
+- [source code](./playground/)
 
 ## Usage
 
