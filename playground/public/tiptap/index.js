@@ -6,20 +6,21 @@ import Editor from "./editor.js";
 import React from "react";
 import { createRoot } from "react-dom/client";
 
-const h = React.createElement;
-
-const wsEndpoint = `ws://${window.location.host}`;
+const wsProto = window.location.protocol === "https:" ? "wss:" : "ws:";
+const wsUrl = `${wsProto}//${window.location.host}/_ws`;
 
 const room = `room-${new Date().toISOString().split("T")[0].replace(/-/g, ".")}`;
 
 // ydoc and provider for Editor A
 const ydocA = new Y.Doc();
 
-const providerA = new WebsocketProvider(wsEndpoint, "tiptap", ydocA);
+const providerA = new WebsocketProvider(wsUrl, "tiptap", ydocA);
 
 // ydoc and provider for Editor B
 const ydocB = new Y.Doc();
-const providerB = new WebsocketProvider(wsEndpoint, "tiptap", ydocB);
+const providerB = new WebsocketProvider(wsUrl, "tiptap", ydocB);
+
+const h = React.createElement;
 
 const App = () => {
   return h(

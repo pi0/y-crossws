@@ -1,13 +1,6 @@
 compatibility_date = "2024-01-01"
-
+name = "y-crossws"
 site = { bucket = "./public" }
-
 main = "./cf.ts"
-
-durable_objects.bindings = [
-  { name = "$DurableObject", class_name = "$DurableObject" }
-]
-
-migrations = [
-  { tag = "v1", new_classes = ["$DurableObject"] }
-]
+durable_objects.bindings = [{ name = "$DurableObject", class_name = "$DurableObject" }]
+migrations = [{ tag = "v1", new_classes = ["$DurableObject"] }]

@@ -8,6 +8,8 @@ const mimes = {
   ".html": "text/html",
   ".js": "text/javascript",
   ".css": "text/css",
+  ".svg": "image/svg+xml",
+  ".json": "application/json",
 };
 
 const server = createServer(async (req, res) => {

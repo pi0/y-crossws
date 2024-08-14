@@ -6,7 +6,20 @@
   <link rel="stylesheet" href="./theme.css" />
 </head>
 <body>
-  <div id="editor"></div>
+  <!-- prettier-ignore -->
+  <div id="links" style="position: absolute; right: 5px; top: 5px">
+    <a href="https://github.com/pi0/y-crossws" target="_blank" rel="noopener noreferrer" >github</a>
+  </div>
+  <div id="editor">
+    <div id="loading">
+      <!-- prettier-ignore -->
+      <div style="display: flex; justify-content: center; align-items: center; width: 100vw; height: 100vh;">
+        <!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
+        <svg width="1em" height="1em" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#ababab" style="margin: 0.5em"><g fill="none" fill-rule="evenodd"><g transform="translate(1 1)" stroke-width="2"><circle stroke-opacity=".5" cx="18" cy="18" r="18"/><path d="M36 18c0-9.94-8.06-18-18-18"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite"/></path></g></g></svg>
+        Loading demo...
+      </div>
+    </div>
+  </div>
   <script type="importmap">
     {
       "imports": {

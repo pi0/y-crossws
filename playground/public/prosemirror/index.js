@@ -15,13 +15,16 @@ import { schema } from "./schema.js";
 
 const ydoc = new Y.Doc();
 
-const wsEndpoint = `ws://${window.location.host}`;
+const wsProto = window.location.protocol === "https:" ? "wss:" : "ws:";
+const wsUrl = `${wsProto}//${window.location.host}/_ws`;
 
-const provider = new WebsocketProvider(wsEndpoint, "prosemirror", ydoc);
+const provider = new WebsocketProvider(wsUrl, "prosemirror", ydoc);
 
 const type = ydoc.getXmlFragment("prosemirror");
 
 const editor = document.querySelector("#editor");
+
+editor.innerHTML = "";
 
 const prosemirrorView = new EditorView(editor, {
   state: EditorState.create({

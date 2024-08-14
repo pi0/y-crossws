@@ -12,6 +12,10 @@
 > [!IMPORTANT]
 > 🚧 This is still a work in progress. Feedback and contributions are welcome!
 
+## 🍿 Demo
+
+Checkout
+
 ## Usage
 
 We first need to initiate universal cross-hooks:
@@ -143,9 +147,14 @@ import * as Y from "yjs";
 import { WebsocketProvider } from "y-crossws/provider";
 
 const ydoc = new Y.Doc();
-const wsUrl = `ws://${window.location.host}`;
 const roomName = "default";
-const provider = new WebsocketProvider(wsURL, roomName, ydoc /* options */);
+
+const wsProto = window.location.protocol === "https:" ? "wss:" : "ws:";
+const wsUrl = `${wsProto}://${window.location.host}/_ws`;
+
+const provider = new WebsocketProvider(wsURL, roomName, ydoc, {
+  /* options */
+});
 ```
 
 ### Provider options
