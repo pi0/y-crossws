@@ -7,10 +7,10 @@
 
 <!-- /automd -->
 
-[yjs](https://docs.yjs.dev/) websocket server powered by [crossws](https://crossws.unjs.io/), works on Node.js, Deno, Bun, Cloudflare Workers and more without any framework dependency and compatible with unmodified [y-websocket](https://github.com/yjs/y-websocket) client provider.
+[yjs](https://docs.yjs.dev/) websocket server powered by [crossws](https://crossws.unjs.io/), works with Node.js, Deno, Bun, Cloudflare Workers and more without any framework dependency and compatible with unmodified [y-websocket](https://github.com/yjs/y-websocket) client provider.
 
 > [!IMPORTANT]
-> This is pretty much a work in progress. Feedback and contributions are more than welcome 🤞
+> 🚧 This is still a work in progress. Feedback and contributions are welcome! 🤞
 
 ## Usage
 
@@ -167,7 +167,7 @@ import { WebsocketProvider } from "y-crossws/provider";
 const ydoc = new Y.Doc();
 const wsUrl = `ws://${window.location.host}`;
 const roomName = "default";
-const provider = new WebsocketProvider(wsURL, roomName, ydoc /* options */);
+const provider = new WebsocketProvider(wsURL, roomName, ydoc, /* options */);
 ```
 
 ### Provider options
