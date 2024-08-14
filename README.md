@@ -19,7 +19,7 @@ We first need to initiate universal cross-hooks:
 ```js
 import { createHandler } from "y-crossws";
 
-const crosswsHandler = createHandler({});
+const crosswsHandler = createHandler();
 ```
 
 Depending on your server choice, use any of the [crossws supported adapters](https://crossws.unjs.io/adapters).
@@ -36,7 +36,7 @@ const server = createServer((req, res) => {
   res.end("");
 });
 
-const ws = crossws(createHandler({}));
+const ws = crossws(createHandler());
 
 server.on("upgrade", ws.handleUpgrade);
 
@@ -52,7 +52,7 @@ server.listen(3000);
 import { createHandler } from "y-crossws";
 import crossws from "crossws/adapters/bun";
 
-const ws = crossws(createHandler({}));
+const ws = crossws(createHandler());
 
 Bun.serve({
   port: 3000,
@@ -75,7 +75,7 @@ Bun.serve({
 import { createHandler } from "y-crossws";
 import crossws from "crossws/adapters/deno";
 
-const ws = crossws(createHandler({}));
+const ws = crossws(createHandler());
 
 Deno.serve({ port: 3000 }, (request, info) => {
   if (request.headers.get("upgrade") === "websocket") {
@@ -96,7 +96,7 @@ Without durable object support:
 import { createHandler } from "y-crossws";
 import crossws from "crossws/adapters/cloudflare";
 
-const ws = crossws(createHandler({}));
+const ws = crossws(createHandler());
 
 export default {
   async fetch(request, env, context) {
@@ -115,7 +115,7 @@ import { createHandler } from "y-crossws";
 import { DurableObject } from "cloudflare:workers";
 import crossws from "crossws/adapters/cloudflare-durable";
 
-const ws = crossws(createHandler({}));
+const ws = crossws(createHandler());
 
 export default {
   async fetch(request, env, context) {
@@ -151,8 +151,6 @@ tag = "v1"
 new_classes = ["$DurableObject"]
 ```
 
-
-
 > [!NOTE]
 > Read more in [crossws docs](https://crossws.unjs.io/adapters/cloudflare).
 
@@ -167,7 +165,7 @@ import { WebsocketProvider } from "y-crossws/provider";
 const ydoc = new Y.Doc();
 const wsUrl = `ws://${window.location.host}`;
 const roomName = "default";
-const provider = new WebsocketProvider(wsURL, roomName, ydoc, /* options */);
+const provider = new WebsocketProvider(wsURL, roomName, ydoc /* options */);
 ```
 
 ### Provider options

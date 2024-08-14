@@ -26,10 +26,10 @@ const server = createServer(async (req, res) => {
   res.end("");
 });
 
-const ws = crossws(createHandler({}));
+const ws = crossws(createHandler());
 
 server.on("upgrade", ws.handleUpgrade);
 
-server.listen(3000, () => {
-  console.log(`Server running at http://localhost:3000`);
+server.listen(process.env.PORT || 3000, () => {
+  console.log(`Server running at http://localhost:${server.address().port}`);
 });

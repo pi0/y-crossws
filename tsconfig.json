@@ -8,7 +8,11 @@
     "skipLibCheck": true,
     "noEmit": true,
     "allowImportingTsExtensions": true,
-    "types": ["bun"]
+    "types": ["bun", "@cloudflare/workers-types", "@deno/types"],
+    "paths": {
+      "y-crossws": ["./src/index.ts"],
+      "y-crossws/provider": ["./src/provider.ts"]
+    }
   },
-  "include": ["src"]
+  "include": ["src", "playground"]
 }

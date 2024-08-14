@@ -1,10 +1,10 @@
 import crossws from "crossws/adapters/bun";
-import { createHandler } from "y-crossws";
+import { createHandler } from "../src/index.ts";
 
 const ws = crossws(createHandler());
 
 const server = Bun.serve({
-  port: 3000,
+  port: process.env.PORT || 3000,
   websocket: ws.websocket,
   async fetch(request, server) {
     // Websocket

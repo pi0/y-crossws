@@ -28,7 +28,7 @@ const defaultContent = `
 
 const getInitialUser = () => {
   return {
-    name: faker.name.fullName(),
+    name: faker.person.fullName(),
     color: colors[Math.floor(Math.random() * colors.length)],
   };
 };
