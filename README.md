@@ -3,7 +3,7 @@
 <!-- automd:badges color=yellow -->
 
 [![npm version](https://img.shields.io/npm/v/y-crossws?color=yellow)](https://npmjs.com/package/y-crossws)
-[![npm downloads](https://img.shields.io/npm/dm/y-crossws?color=yellow)](https://npmjs.com/package/y-crossws)
+[![npm downloads](https://img.shields.io/npm/dm/y-crossws?color=yellow)](https://npm.chart.dev/y-crossws)
 
 <!-- /automd -->
 
