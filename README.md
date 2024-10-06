@@ -188,4 +188,4 @@ const provider = new WebsocketProvider(wsURL, roomName, ydoc, {
 
 ## License
 
-💛 Published under the [MIT](https://github.com/unjs/y-crossws/blob/main/LICENSE) license.
+💛 Published under the [MIT](https://github.com/pi0/y-crossws/blob/main/LICENSE) license.
