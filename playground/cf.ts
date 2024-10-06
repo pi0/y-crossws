@@ -7,6 +7,7 @@ import crossws from "crossws/adapters/cloudflare-durable";
 import manifestJSON from "__STATIC_CONTENT_MANIFEST";
 const assetManifest = JSON.parse(manifestJSON);
 
+// @ts-expect-error TODO
 const ws = crossws(createHandler());
 
 export default {
@@ -32,13 +33,18 @@ export default {
 };
 
 export class $DurableObject extends DurableObject {
-  fetch(request) {
+  fetch(request: Request) {
     return ws.handleDurableUpgrade(this, request);
   }
-  webSocketMessage(client, message) {
+  webSocketMessage(client: WebSocket, message: string | ArrayBuffer) {
     return ws.handleDurableMessage(this, client, message);
   }
-  webSocketClose(client, code, reason, wasClean) {
+  webSocketClose(
+    client: WebSocket,
+    code: number,
+    reason: string,
+    wasClean: boolean,
+  ) {
     return ws.handleDurableClose(this, client, code, reason, wasClean);
   }
 }

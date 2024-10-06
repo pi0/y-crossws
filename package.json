@@ -42,38 +42,37 @@
     "play:bun": "PORT=3000 bun run --watch ./playground/bun.ts",
     "play:cf": "wrangler dev -c ./playground/wrangler.toml --port 3000",
     "play:deno": "PORT=3000 deno run --unstable-byonm -A ./playground/deno.ts",
-    "play:node": "PORT=3000 node ./playground/node.mjs",
+    "play:node": "PORT=3000 jiti ./playground/node.ts",
     "release": "pnpm test && changelogen --release && npm publish && git push --follow-tags",
     "test": "pnpm lint && pnpm test:types",
     "test:types": "tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
-    "lib0": "^0.2.96",
-    "y-protocols": "^1.0.5"
+    "lib0": "^0.2.98",
+    "y-protocols": "^1.0.6"
   },
   "devDependencies": {
     "@cloudflare/kv-asset-handler": "^0.3.4",
-    "@cloudflare/workers-types": "^4.20240806.0",
-    "@deno/types": "^0.0.1",
-    "@types/bun": "^1.1.6",
-    "@types/node": "^22.1.0",
+    "@cloudflare/workers-types": "^4.20241004.0",
+    "@types/deno": "^2.0.0",
+    "@types/node": "^22.7.4",
     "@types/ws": "^8.5.12",
-    "automd": "^0.3.8",
-    "changelogen": "^0.5.5",
-    "crossws": "^0.2.4",
-    "eslint": "^9.8.0",
-    "eslint-config-unjs": "^0.3.2",
-    "jiti": "^2.0.0-beta.3",
+    "automd": "^0.3.10",
+    "changelogen": "^0.5.7",
+    "crossws": "^0.3.1",
+    "eslint": "^9.12.0",
+    "eslint-config-unjs": "^0.4.1",
+    "jiti": "^2.3.1",
     "prettier": "^3.3.3",
-    "typescript": "^5.5.4",
-    "unbuild": "^3.0.0-rc.7",
-    "wrangler": "^3.71.0",
+    "typescript": "^5.6.2",
+    "unbuild": "^2.0.0",
+    "wrangler": "^3.80.0",
     "ws": "^8.18.0",
-    "yjs": "^13.6.18"
+    "yjs": "^13.6.19"
   },
   "peerDependencies": {
     "crossws": "^0.2.4",
     "yjs": "^13.5.6"
   },
-  "packageManager": "pnpm@9.7.0"
+  "packageManager": "pnpm@9.12.0"
 }

@@ -1,7 +1,19 @@
 import crossws from "crossws/adapters/bun";
 import { createHandler } from "../src/index.ts";
 
+// @ts-expect-error TODO
 const ws = crossws(createHandler());
+
+declare global {
+  const Bun: {
+    serve(options: {
+      port: number | string;
+      websocket: any;
+      fetch(request: Request, server: any): Promise<Response | undefined>;
+    }): { url: string };
+    file(url: URL): BodyInit & { exists(): Promise<boolean> };
+  };
+}
 
 const server = Bun.serve({
   port: process.env.PORT || 3000,
@@ -9,8 +21,7 @@ const server = Bun.serve({
   async fetch(request, server) {
     // Websocket
     if (request.headers.get("upgrade") === "websocket") {
-      await ws.handleUpgrade(request, server);
-      return;
+      return ws.handleUpgrade(request, server);
     }
 
     // Static

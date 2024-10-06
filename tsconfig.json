@@ -8,7 +8,7 @@
     "skipLibCheck": true,
     "noEmit": true,
     "allowImportingTsExtensions": true,
-    "types": ["bun", "@cloudflare/workers-types", "@deno/types"],
+    "types": ["@cloudflare/workers-types", "@types/deno", "@types/node"],
     "paths": {
       "y-crossws": ["./src/index.ts"],
       "y-crossws/provider": ["./src/provider.ts"]

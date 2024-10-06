@@ -13,7 +13,7 @@ const mimes = {
 };
 
 const server = createServer(async (req, res) => {
-  const url = new URL(req.url, `http://${req.headers.host}`);
+  const url = new URL(req.url || "/", `http://${req.headers.host}`);
   for (const path of [
     `public${url.pathname}`,
     `public${url.pathname}/index.html`,
@@ -21,17 +21,21 @@ const server = createServer(async (req, res) => {
     const fullPath = new URL(path, import.meta.url);
     const contents = await readFile(fullPath).catch(() => undefined);
     if (contents) {
-      res.setHeader("content-type", mimes[extname(fullPath.pathname)]);
+      const mime =
+        mimes[extname(fullPath.pathname) as keyof typeof mimes] || "text/plain";
+      res.setHeader("content-type", mime);
       return res.end(contents);
     }
   }
   res.end("");
 });
 
+// @ts-expect-error TODO
 const ws = crossws(createHandler());
 
 server.on("upgrade", ws.handleUpgrade);
 
 server.listen(process.env.PORT || 3000, () => {
-  console.log(`Server running at http://localhost:${server.address().port}`);
+  const addr = server.address() as { port: number };
+  console.log(`Server running at http://localhost:${addr.port}`);
 });

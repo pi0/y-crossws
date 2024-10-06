@@ -1,6 +1,7 @@
 import crossws from "crossws/adapters/deno";
 import { createHandler } from "../src/index.ts";
 
+// @ts-expect-error TODO
 const ws = crossws(createHandler());
 
 const mimes = {

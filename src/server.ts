@@ -59,8 +59,7 @@ export class YCrossws {
     const doc = this.getDoc(peer);
     try {
       const encoder = encoding.createEncoder();
-      const _data = message.rawData;
-      const data = _data instanceof Uint8Array ? _data : new Uint8Array(_data);
+      const data = message.uint8Array();
       const decoder = decoding.createDecoder(data);
       const messageType = decoding.readVarUint(decoder);
       switch (messageType) {
@@ -135,7 +134,7 @@ export class YCrossws {
     if ((peer as any)._ycdoc) {
       return (peer as any)._ycdoc;
     }
-    const docName = new URL(peer.url).pathname.slice(1);
+    const docName = new URL(peer.request?.url!).pathname.slice(1);
     let doc = this.docs.get(docName);
     if (!doc) {
       doc = new SharedDoc(docName, this);
