@@ -71,8 +71,8 @@
     "yjs": "^13.6.19"
   },
   "peerDependencies": {
-    "crossws": "^0.2.4",
-    "yjs": "^13.5.6"
+    "crossws": "^0.3.1",
+    "yjs": "^13.6.19"
   },
   "packageManager": "pnpm@9.12.0"
 }
