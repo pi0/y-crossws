@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.2
+
+[compare changes](https://github.com/pi0/y-crossws/compare/v0.0.1...v0.0.2)
+
+### 🏡 Chore
+
+- Update deps ([541919f](https://github.com/pi0/y-crossws/commit/541919f))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v0.0.1
 
 

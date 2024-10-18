@@ -1,6 +1,6 @@
 {
   "name": "y-crossws",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "yjs websocket server powered by crossws, works on Node.js, Deno, Bun, Cloudflare Workers and more without any framework dependency and compatible with unmodified y-websocket client provider.",
   "keywords": [
     "yjs",
