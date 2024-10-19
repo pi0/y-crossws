@@ -9,10 +9,13 @@
 
 [yjs](https://docs.yjs.dev/) websocket server powered by [crossws](https://crossws.unjs.io/), works with Node.js, Deno, Bun, Cloudflare Workers and more without any framework dependency and compatible with unmodified [y-websocket](https://github.com/yjs/y-websocket) client provider.
 
-> [!IMPORTANT]
+> [!NOTE]
 > 🚧 This is still a work in progress. Feedback and contributions are welcome!
 
 ## 🍿 Demo
+
+> [!NOTE]
+> See [nuxt-tiptap](https://github.com/pi0/nuxt-tiptap) for a full Demo with Nuxt.
 
 [tiptap](https://tiptap.dev/) editor with collaborative editing deployed on Cloudflare workers with durable objects.
 
