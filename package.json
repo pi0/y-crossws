@@ -55,7 +55,7 @@
     "@cloudflare/kv-asset-handler": "^0.3.4",
     "@cloudflare/workers-types": "^4.20241011.0",
     "@types/deno": "^2.0.0",
-    "@types/node": "^22.7.6",
+    "@types/node": "^24.12.2",
     "@types/ws": "^8.5.12",
     "automd": "^0.3.12",
     "changelogen": "^0.5.7",
