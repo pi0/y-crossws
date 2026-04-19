@@ -64,7 +64,7 @@
     "eslint-config-unjs": "^0.4.1",
     "jiti": "^2.3.3",
     "prettier": "^3.3.3",
-    "typescript": "^5.6.3",
+    "typescript": "^6.0.3",
     "unbuild": "^2.0.0",
     "wrangler": "^3.81.0",
     "ws": "^8.18.0",
