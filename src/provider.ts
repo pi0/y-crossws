@@ -143,7 +143,7 @@ export class WebsocketProvider extends ObservableV2<any> {
   doc: Y.Doc;
   awareness: awarenessProtocol.Awareness;
 
-  ws?: WebSocket;
+  ws: WebSocket | null = null;
   wsconnected: boolean = false;
   wsconnecting: boolean = false;
   wsUnsuccessfulReconnects: number = 0;
@@ -402,7 +402,7 @@ function setupWS(provider: WebsocketProvider) {
 
     websocket.addEventListener("close", (event) => {
       provider.emit("connection-close", [event, provider]);
-      provider.ws = undefined;
+      provider.ws = null;
       provider.wsconnecting = false;
       if (provider.wsconnected) {
         provider.wsconnected = false;

@@ -1,13 +1,12 @@
 import { createHandler } from "../src/index.ts";
 import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
 import { DurableObject } from "cloudflare:workers";
-import crossws from "crossws/adapters/cloudflare-durable";
+import crossws from "crossws/adapters/cloudflare";
 
 // @ts-ignore
 import manifestJSON from "__STATIC_CONTENT_MANIFEST";
 const assetManifest = JSON.parse(manifestJSON);
 
-// @ts-expect-error TODO
 const ws = crossws(createHandler());
 
 export default {

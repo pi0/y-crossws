@@ -144,6 +144,27 @@ migrations = [
 > [!NOTE]
 > Read more about Cloudflare adapter in [crossws docs](https://crossws.unjs.io/adapters/cloudflare#durable-objects).
 
+## Multi-instance deployments
+
+The server relays document and awareness updates over [crossws pub/sub](https://crossws.unjs.io/guide/pubsub). By default pub/sub is in-memory and **local to a single instance**, so peers only sync with others connected to the same instance.
+
+This is fine for a single long-running server, or on Cloudflare where one Durable Object owns the room. But on horizontally-scaled platforms (e.g. Vercel) where a room's connections can land on different instances, you need a **sync backplane** to relay messages across them. crossws is gaining built-in backplane drivers (Redis, Postgres, Node cluster, `BroadcastChannel`) — see [h3js/crossws#192](https://github.com/h3js/crossws/pull/192). Once available, it is enabled on the adapter and requires no changes to `y-crossws`:
+
+```js
+import crossws from "crossws/adapters/node";
+import { redis } from "crossws/sync";
+import Redis from "ioredis";
+import { createHandler } from "y-crossws";
+
+const ws = crossws({
+  ...createHandler(),
+  sync: redis({ client: new Redis(), channel: "y-crossws" }),
+});
+```
+
+> [!IMPORTANT]
+> A sync backplane relays pub/sub _messages_ across instances, but not the server-side `Y.Doc` _state_ each instance keeps for initial sync. A client connecting to an instance that hasn't yet seen a room can miss history that only exists on another instance. Full cross-instance state sync is tracked upstream; until then, prefer a single instance or route a room's peers to the same instance.
+
 ## Websocket provider
 
 You can use `WebsocketProvider` from legacy [y-websocket](https://github.com/yjs/y-websocket) or a native one from `y-crossws`. Both are almost identical in terms of API at the moment, however, the y-crossws version has better typescript refactors and might introduce more enhancements in sync with the server provider in the future.
@@ -185,7 +206,8 @@ const provider = new WebsocketProvider(wsURL, roomName, ydoc, {
 - Enable [Corepack](https://github.com/nodejs/corepack) using `corepack enable`
 - Install dependencies using `pnpm install`
 - Build in stub mode using `pnpm build --stub`
-- Run playgrounds with `pnpm dev:*` commands.
+- Run playgrounds with `pnpm play:*` commands (`play:node`, `play:bun`, `play:deno`, `play:cf`).
+- Run the test suite with `pnpm test` (lint + types + [Vitest](https://vitest.dev)), or `pnpm vitest` to watch.
 
 </details>
 

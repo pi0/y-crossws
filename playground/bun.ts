@@ -1,7 +1,6 @@
 import crossws from "crossws/adapters/bun";
 import { createHandler } from "../src/index.ts";
 
-// @ts-expect-error TODO
 const ws = crossws(createHandler());
 
 declare global {

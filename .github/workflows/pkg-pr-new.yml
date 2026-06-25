@@ -1,4 +1,4 @@
-name: ci
+name: pkg-pr-new
 
 on:
   push:
@@ -9,17 +9,15 @@ on:
       - main
 
 jobs:
-  ci:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: corepack enable
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: "pnpm"
       - run: pnpm install
-      - run: pnpm lint
-      - run: pnpm test:types
-      - run: pnpm vitest run
       - run: pnpm build
+      - run: pnpm dlx pkg-pr-new publish
