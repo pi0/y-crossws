@@ -30,7 +30,6 @@ const server = createServer(async (req, res) => {
   res.end("");
 });
 
-// @ts-expect-error TODO
 const ws = crossws(createHandler());
 
 server.on("upgrade", ws.handleUpgrade);

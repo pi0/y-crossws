@@ -36,6 +36,11 @@ export class YCrossws {
 
   onOpen(peer: crossws.Peer) {
     const doc = this.getDoc(peer);
+    // Subscribe to the room's pub/sub channel. Relay is local to this instance;
+    // it becomes cluster-wide once a crossws sync backplane is configured on the
+    // adapter (https://github.com/h3js/crossws/pull/192). Note the backplane
+    // relays messages, not the server-side Y.Doc state — see `onDocUpdate`.
+    peer.subscribe(doc.name);
     // Send sync step 1
     const encoder = encoding.createEncoder();
     encoding.writeVarUint(encoder, messageSync);
@@ -92,13 +97,17 @@ export class YCrossws {
 
   onClose(peer: crossws.Peer) {
     const doc = this.getDoc(peer);
+    peer.unsubscribe(doc.name);
     if (doc.peerIds.has(peer)) {
       const controlledIds = doc.peerIds.get(peer) || [];
       doc.peerIds.delete(peer);
+      // Clear this peer's awareness states and tell the rest of the room. The
+      // closing peer is the origin, so the removal is published to others (and
+      // not back to the peer that is leaving).
       awarenessProtocol.removeAwarenessStates(
         doc.awareness,
         [...controlledIds],
-        undefined,
+        peer,
       );
       if (doc.peerIds.size === 0 && this.persistence) {
         // If persisted, we store state and destroy ydocument
@@ -115,17 +124,28 @@ export class YCrossws {
 
   onDocUpdate(
     update: Uint8Array,
-    _peer: crossws.Peer,
+    origin: unknown,
     doc: Y.Doc,
     _transaction: Y.Transaction,
   ) {
+    // The transaction origin is the peer whose message produced this update
+    // (passed to `readSyncMessage`). Publishing from it relays to every other
+    // subscriber in the room — publish excludes the origin, which already has
+    // the update. Updates with a non-peer origin (e.g. server-side state load)
+    // are not relayed here.
+    //
+    // A sync backplane relays this published message to peers on other
+    // instances, but it does not feed it back through the `message` hook, so
+    // each instance's `Y.Doc` only reflects peers handled locally. A peer that
+    // connects to a "cold" instance therefore syncs (via `writeSyncStep1` in
+    // `onOpen`) against a doc that may be missing history from other instances.
+    if (!isPeer(origin)) {
+      return;
+    }
     const encoder = encoding.createEncoder();
     encoding.writeVarUint(encoder, messageSync);
     syncProtocol.writeUpdate(encoder, update);
-    const message = encoding.toUint8Array(encoder);
-    for (const peer of (doc as SharedDoc).peerIds.keys()) {
-      peer.send(message);
-    }
+    origin.publish((doc as SharedDoc).name, encoding.toUint8Array(encoder));
   }
 
   // --- utils ---
@@ -168,10 +188,11 @@ export class SharedDoc extends Y.Doc {
     this.on("update", yc.onDocUpdate.bind(yc));
   }
 
-  onAwarenessUpdate(changes: AwarenessChanges, peer?: crossws.Peer) {
-    // Update peerIds map
-    if (peer) {
-      const peerControlledIDs = this.peerIds.get(peer);
+  onAwarenessUpdate(changes: AwarenessChanges, origin: unknown) {
+    // Track which awareness client ids each peer controls, so they can be
+    // cleared when the peer disconnects.
+    if (isPeer(origin)) {
+      const peerControlledIDs = this.peerIds.get(origin);
       if (peerControlledIDs !== undefined) {
         for (const clientID of changes.added) {
           peerControlledIDs.add(clientID);
@@ -181,7 +202,12 @@ export class SharedDoc extends Y.Doc {
         }
       }
     }
-    // Broadcast awareness update
+    // Awareness is ephemeral and never persisted. Relay it on the room channel,
+    // publishing from the origin peer (excludes the sender). Changes with a
+    // non-peer origin are local-only and not relayed.
+    if (!isPeer(origin)) {
+      return;
+    }
     const encoder = encoding.createEncoder();
     encoding.writeVarUint(encoder, messageAwareness);
     encoding.writeVarUint8Array(
@@ -192,11 +218,18 @@ export class SharedDoc extends Y.Doc {
         ...changes.removed,
       ]),
     );
-    const buff = encoding.toUint8Array(encoder);
-    for (const peer of this.peerIds.keys()) {
-      peer.send(buff);
-    }
+    origin.publish(this.name, encoding.toUint8Array(encoder));
   }
+}
+
+// --------- utils ---------
+
+function isPeer(value: unknown): value is crossws.Peer {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    typeof (value as crossws.Peer).publish === "function"
+  );
 }
 
 // --------- constants ---------

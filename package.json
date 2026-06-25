@@ -36,15 +36,15 @@
   ],
   "scripts": {
     "build": "unbuild",
-    "lint": "eslint . && prettier -c src playground",
-    "lint:fix": "automd && eslint . --fix && prettier -w src playground",
+    "lint": "eslint . && prettier -c src playground test",
+    "lint:fix": "automd && eslint . --fix && prettier -w src playground test",
     "prepack": "pnpm build",
     "play:bun": "PORT=3000 bun run --watch ./playground/bun.ts",
     "play:cf": "wrangler dev -c ./playground/wrangler.toml --port 3000",
     "play:deno": "PORT=3000 deno run --unstable-byonm -A ./playground/deno.ts",
     "play:node": "PORT=3000 jiti ./playground/node.ts",
     "release": "pnpm test && changelogen --release && npm publish && git push --follow-tags",
-    "test": "pnpm lint && pnpm test:types",
+    "test": "pnpm lint && pnpm test:types && vitest run",
     "test:types": "tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
@@ -59,19 +59,20 @@
     "@types/ws": "^8.5.12",
     "automd": "^0.3.12",
     "changelogen": "^0.5.7",
-    "crossws": ">=0.2.0 <0.4.0",
+    "crossws": "^0.4.6",
     "eslint": "^9.12.0",
     "eslint-config-unjs": "^0.4.1",
     "jiti": "^2.3.3",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3",
     "unbuild": "^2.0.0",
+    "vitest": "^4.1.9",
     "wrangler": "^3.81.0",
     "ws": "^8.18.0",
     "yjs": "^13.6.20"
   },
   "peerDependencies": {
-    "crossws": ">=0.2.0 <0.4.0",
+    "crossws": "^0.4.6",
     "yjs": "^13.5.6"
   },
   "packageManager": "pnpm@9.12.0"
